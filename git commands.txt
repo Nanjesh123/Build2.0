@@ -1,0 +1,347 @@
+Terminology
+==================================================================================================================================================================
+Version
+The term version is normally used to refer to the external reference number allocated by a human to the controlled files, or their output 
+(e.g., in the case of source code).
+It indicates change that is made to file which is under git
+
+Working copy
+Your copy of the file that you actually make your changes in.
+
+Check-in 
+To save your working copy of the file into the repository. Referred to as Commit in some version control systems.
+
+Check-out
+To take a copy of a file from the repository into your working folder (sandbox). Typically you will be checking-out the latest revision, 
+but you can also access all earlier revisions. Depending on the VCS the file can be flagged as simply checked-out, or checked-out exclusively (locked).
+
+Commit
+To save your working copy of the file into the repository. Referred to as Check-in in some version control systems.
+
+Conflict
+The situation when two people try to commit changes that affect the same region of the same file. These must be resolved, either using a Merge tool, or manually.
+
+Repository
+The master storage of all the files under version (or source) control, also known as the database.
+
+Revision
+A committed change in the history of a file or set of files. 
+This is the numerical reference supplied by the VCS to track the different editions it is holding of the file.
+
+
+Trunk:
+Trunk would be the main body of development, originating from the start of the project until the present.
+
+Branch:
+Branch will be a copy of code derived from a certain point in the trunk that is used for applying major changes to the code while preserving the integrity 
+of the code in the trunk. 
+If the major changes work according to plan, they are usually merged back into the trunk.
+
+Tag or Label:
+Tag will be a point in time on the trunk or a branch that you wish to preserve. 
+The two main reasons for preservation would be that either this is a major release of the software, whether alpha, beta, RC or RTM,
+ or this is the most stable point of the software before major revisions on the trunk were applied.
+
+
+Merging occurs when you want to bring the work back together. 
+Since the work has been done independently on different branches, some code files (and other changes) may have occurred in some of the same files. 
+A merge conflict may occur as it might not be clear how to put together a file from different branches correctly - 
+this normally requires manual intervention and is what most coders refer to when talking about "merge hell".
+
+=========================================================================================================================================================================================
+
+git init
+
+There are two types of repositories: bare and non-bare
+
+Bare repositories do not have a working copy and you can push to them. 
+Those are the types of repositories you get in Github! If you want to create a bare repository, 
+you can use
+
+git init --bare
+
+
+git add filename
+
+git status
+
+git add * and git add .
+
+git add . --force
+
+git commit -m "comments "
+
+git commit -F filename  ---force commit and you can commit only required files
+
+git branch  --- lists branc
+
+git branch branch_name  ---creates branch
+
+git checkout branch_name  --- switch branch
+
+git checkout -b branch_name2 ---- creates branch and switch branch to branch_name2
+
+git merge branchname (branch to be get merged should be checout)
+
+remove staged changes :
+
+git reset HEAD file_name
+--------------------------------------------------
+
+git clean -f --- will untracked files in workspace 
+
+git clean -fdx
+
+-f - force
+
+-d - directories too
+
+-x - remove ignored files too ( don't use this if you don't want to remove ignored files)
+
+
+git clean -f
+
+cleaning untracked files 
+================================================
+
+remove files and branches
+
+git rm filename
+
+git branch -d branch_name
+
+------------------------------------------------------
+
+git clone /patch/to/dir
+
+git push /patch/to/dir
+
+
+You can simply convert your remote repository to bare repository (there is no working copy in the bare repository - 
+the folder contains only the actual repository data).
+
+Execute the following command in your remote repository folder:
+
+git config --bool core.bare true
+
+Then delete all the files except .git in that folder. And then you will be able to perform git push to the remote repository without any errors.
+
+
+git config --bool core.bare true
+
+
+git fetch
+
+=====================================================
+
+git log --oneline
+
+Viewing an Old Revision
+
+git checkout master
+
+git checkout a1e8fb5 hello.py
+
+Checking Out a File
+=============================================================================
+
+Reverting should be used when you want to remove an entire commit from your project history. This can be useful, for example,
+ if you’re tracking down a bug and find that it was introduced by a single commit.
+ Instead of manually going in, fixing it, and committing a new snapshot, you can use git revert to automatically do all of this for you.
+Reverting vs. Resetting
+
+It's important to understand that git revert undoes a single commit—it does not “revert” back to the previous state of a project by removing all subsequent commits. 
+In Git, this is actually called a reset, not a revert.
+
+1) First, it doesn’t change the project history, which makes it a “safe” operation for commits that have already been published to a shared repository. 
+2) Second, git revert is able to target an individual commit at an arbitrary point in the history,
+
+git revert HEAD --- revert last commit
+
+git revert commit-id --- revert mentioned commit
+
+git reset
+
+Resets your index and working directory to the state of your last commit. Example: git reset --hard HEAD
+
+58fb9cf0ec3f2017743fe546afb512fd04c31f13
+
+===================================================================================================================================================
+
+
+
+https://www.atlassian.com/git/tutorials/undoing-changes/git-clean
+
+=========================================================================================================================
+Major GIT commands:
+
+git config
+	Sets configuration values for your user name, email, gpg key, preferred diff algorithm, file formats and more. 
+Example: git config --global user.name "My Name" git config --global user.email "user@domain.com" cat ~/.gitconfig [user] name = My Name email = user@domain.com
+    
+git init
+	Initializes a git repository –
+         creates the initial ‘.git’ directory in a new or in an existing project. Example: cd /home/user/my_new_git_folder/ git init
+    
+git clone
+	Makes a Git repository copy from a remote source.
+        Also adds the original location as a remote so you can fetch from it again and push to it if you have permissions. 
+	Example: git clone git@github.com:user/test.git
+    
+git add
+	Adds files changes in your working directory to your index. Example: git add .
+    
+git rm
+	Removes files from your index and your working directory so they will not be tracked. Example: git rm filename
+    
+git commit
+	Takes all of the changes written in the index, creates a new commit object pointing to it and sets the branch to point to that new commit. 
+	Examples: git commit -m ‘committing added changes’ git 	commit -a -m ‘committing all changes, equals to git add and git commit’
+    
+git status
+	Shows you the status of files in the index versus the working directory. 
+	It will list out files that are untracked (only in your working directory), 
+        modified (tracked but not yet updated in your index), and staged (added to your index and ready for committing). 
+        Example: git status # On branch master # # Initial commit # # Untracked files: # (use "git add <file>..." 
+         to include in what will be committed) # # README nothing added to commit 
+	but untracked files present (use "git add" to track)
+    
+git branch
+	Lists existing branches, including remote branches if ‘-a’ is provided. 
+       Creates a new branch if a branch name is provided. Example: git branch -a * master remotes/origin/master
+    
+git checkout
+	Checks out a different branch – switches branches by updating the index, working tree, and HEAD to reflect the chosen branch. 
+         Example: git checkout newbranch
+    
+git merge
+	Merges one or more branches into your current branch and automatically creates a new commit if there are no conflicts. 
+       Example: git merge newbranchversion
+    
+git reset
+	Resets your index and working directory to the state of your last commit. Example: git reset --hard HEAD
+    
+git stash
+	Temporarily saves changes that you don’t want to commit immediately. You can apply the changes later. 
+	Example: git stash Saved working directory and index state "WIP on master: 84f241e first 	
+commit" HEAD is now at 84f241e first commit (To restore them type "git stash apply")
+    
+git tag
+	Tags a specific commit with a simple, human readable handle that never moves. Example: git tag -a v1.0 -m 'this is version 1.0 tag'
+    
+git fetch
+	Fetches all the objects from the remote repository that are not present in the local one. Example: git fetch origin
+    
+git pull
+	Fetches the files from the remote repository and merges it with your local one. 
+This command is equal to the git fetch and the git merge sequence. Example: git pull origin
+    
+git push
+	Pushes all the modified local objects to the remote repository and advances its branches. Example: git push origin master
+    
+git remote
+	Shows all the remote versions of your repository. Example: git remote origin
+    
+git log
+	Shows a listing of commits on a branch including the corresponding details. 
+	Example: git log commit 84f241e8a0d768fb37ff7ad40e294b61a99a0abe Author: User <user@domain.com> Date: Mon May 3 09:24:05 2010 +0300 first commit
+    
+git show
+	Shows information about a git object. 
+	Example: git show commit 84f241e8a0d768fb37ff7ad40e294b61a99a0abe Author: User <user@domain.com> Date: Mon May 3 09:24:05 2010 +0300 first commit diff --	git a/README b/README new file mode 100644 index 0000000..e69de29
+    
+git ls-tree
+	Shows a tree object, including the mode and the name of each item and the SHA-1 value of the blob or the tree that it points to. 
+	Example: git ls-tree master^{tree} 100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 README
+    
+git cat-file
+	Used to view the type of an object through the SHA-1 value. Example: git cat-file -t e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 blob
+    
+git grep
+	Lets you search through your trees of content for words and phrases. Example: git grep "www.siteground.com" -- *.php
+    
+git diff
+	Generates patch files or statistics of differences between paths or files in your git repository, or your index or your working directory. Example: git diff
+	
+	
+=======================================================================================================================================================================================
+
+	
+
+These three commands have entirely different purposes. They are not even remotely similar.
+git revert
+
+This command creates a new commit that undoes the changes from a previous commit. 
+This command adds new history to the project (it doesn't modify existing history).
+git checkout
+
+This command checks-out content from the repository and puts it in your work tree. 
+It can also have other effects, depending on how the command was invoked. For instance, it can also change which branch you are currently working on. 
+This command doesn't make any changes to the history.
+git reset
+
+This command is a little more complicated. It actually does a couple of different things depending on how it is invoked. 
+It modifies the index (the so-called "staging area"). Or it changes which commit a branch head is currently pointing at. 
+This command may alter existing history (by changing the commit that a branch references).
+Using these commands
+
+If a commit has been made somewhere in the project's history, and you later decide that the commit is wrong and should not have been done, 
+then git revert is the tool for the job. It will undo the changes introduced by the bad commit, recording the "undo" in the history.
+
+If you have modified a file in your working tree, but haven't committed the change, 
+then you can use git checkout to checkout a fresh-from-repository copy of the file.
+
+If you have made a commit, but haven't shared it with anyone else and you decide you don't want it, 
+then you can use git reset to rewrite the history so that it looks as though you never made that commit.
+
+================================================================================================================================================================
+
+
+Trunk: The main development area. This is where your next major release of the code lives, and generally has all the newest features.
+
+Branches: Every time you release a major version, it gets a branch created. 
+This allows you to do bug fixes and make a new release without having to release the newest - possibly unfinished or untested - features.
+
+Tags: Every time you release a version (final release, release candidates (RC), and betas) you make a tag for it. 
+This gives you a point-in-time copy of the code as it was at that state, allowing you to go back and reproduce any bugs if necessary in a past version, 
+or re-release a past version exactly as it was.
+ Branches and tags in SVN are lightweight - on the server, it does not make a full copy of the files, just a marker saying "these files were copied at this revision" that only takes up a few bytes.With this in mind, you should never be concerned about creating a tag for any released code. As I said earlier, tags are often omitted and instead, a changelog or other document clarifies the revision number when a release is made.
+
+===================================================================================================================
+
+
+
+What is a bare git repository?
+
+
+
+What is the difference between a repository created using the “git init” command and the “git init –bare” command?
+
+Repositories created with “git init” command contain 2 things: the .git folder repository (or code history) and also real life working copies of your source code files. You can think of this type of repository as a working directory. Its a folder with code history stored in .git folder and all the source files as well. You can work in this directory changing source files and save your changes using the “git add” and “git commit” commands.
+Bare repositories contain only the .git folder and no working copies of your source files. 
+If you “cd” into a bare repository you find only the .git folder and nothing else. A bare repository strictly contains the version history of your code.
+
+Why use one or the other?
+
+Well, a working repository is for just that… working. Its where you will actually edit files, add files, delete files to create your project saving your changes to the local .git repo along the way. 
+If you are starting a project in a folder which will contain your code as well as a git repo for tracking changes use “git init”. 
+Also if you “git clone” a repository from some one else you will be given a working repository with the .git folder and copies of the working files.
+
+A bare repository is for… sharing on a centralized server. Bare repositories are shared repos where developers can send their local changes from their working copies of
+ projects to the world or to the rest of their team. By using the “git push” command,
+ you are able to send changes in your local working copies of a project to a centralized shared bare repository. Other developers can then “git pull” 
+to receive the changes that you made. If you are collaborating with a team of developers or you need to work on a project from multiple computers , 
+
+then a bare git repository is what you need in between to coordinate the distributed development.
+
+To summarize: the working directory created with “git init” or “git clone” is my local copy of a project. Its where I add my changes to a project’s code files and test. After I am happy I “git add” and “git commit”. Then I “git push” to a bare repository, usually on another server, so that other developers can access my changes. When I want to update my local working copy I “git pull” to receive the changes that other developers have made.
+
+==============================================================================================================================================================================
+
+
+merge conflicts 
+
+https://help.github.com/articles/resolving-a-merge-conflict-from-the-command-line/
+
+
+ 
